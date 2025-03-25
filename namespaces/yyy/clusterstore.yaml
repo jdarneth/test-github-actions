@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterStore
+metadata:
+  name: vault-test
+spec:
+  refreshInterval: "1m"
+  secretStoreRef:
+    name: secret-store-test
+    kind: ClusterSecretStore
+  target:
+    name: vault-secret
+  data:
+    - secretKey: vault-secret
+      remoteRef:
+        key: xxx/secrets/env
+        property: password
