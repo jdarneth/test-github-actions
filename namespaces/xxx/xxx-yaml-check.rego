@@ -22,5 +22,5 @@ is_valid_path {
 deny[msg] {
   is_external_secret 
   not is_valid_path
-  msg := "the path is not allowed..."
+  msg := sprintf("the path %s is not allowed.", input.spec.data[_].remoteRef.key)
 }
