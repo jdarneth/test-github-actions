@@ -4,16 +4,11 @@ on:
   push:
     branches: 
       - main
-    
-permissions:
-  contents: read
 
 jobs:
   build:
     permissions:
-      contents: read # for actions/checkout to fetch code
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+      contents: read
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -27,5 +22,9 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
           sudo apt-get update
           sudo apt-get install trivy
-          trivy fs --exit-code=1 --scanners misconf --config-check yaml-check.rego --namespaces user external-secret.yaml
-          trivy fs --exit-code=1 --scanners misconf --config-check yaml-check.rego --namespaces user wrong-external-secret.yaml
+          
+      - name: Run Trivy on first file
+        run: trivy fs --exit-code=1 --scanners misconf --config-check yaml-check.rego --namespaces user external-secret.yaml
+      
+      - name: Run Trivy on second file
+        run: trivy fs --exit-code=1 --scanners misconf --config-check yaml-check.rego --namespaces user wrong-external-secret.yaml
