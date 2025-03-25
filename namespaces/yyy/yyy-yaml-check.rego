@@ -11,12 +11,16 @@
 #     - type: kubernetes
 package user.kubernetes.ID001
 
-is_valid_path {
+is_external_secret {
   input.kind == "ExternalSecret"
+}
+
+is_valid_path {
   regex.match("^yyy/.*$", input.spec.data[_].remoteRef.key)
 }
 
 deny[msg] {
+  is_external_secret
   not is_valid_path
-  msg := "the path is not allowed..."
+  msg := sprintf("the path %s is not allowed.", input.spec.data[_].remoteRef.key)
 }
