@@ -27,4 +27,4 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
           sudo apt-get update
           sudo apt-get install trivy
-          trivy fs --scanners misconf --config-check yaml-check.rego --namespaces user wrong-external-secrets.yaml
+          trivy fs --scanners misconf --config-check yaml-check.rego --namespaces user wrong-external-secret.yaml
