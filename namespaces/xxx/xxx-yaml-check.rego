@@ -20,6 +20,7 @@ is_valid_path {
 }
 
 deny[msg] {
-  is_external_secret and not is_valid_path
+  is_external_secret 
+  not is_valid_path
   msg := "the path is not allowed..."
 }
