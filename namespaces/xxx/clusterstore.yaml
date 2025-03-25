@@ -1,0 +1,6 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterStore
+metadata:
+  name: vault-test
+spec:
+  refreshInterval: "1m"
